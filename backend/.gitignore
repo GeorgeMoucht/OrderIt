@@ -1,0 +1,31 @@
+
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+#Database files
+db.sqlite3
+*.sqlite3
+
+# Django secret settings
+.env
+*.env
+config.json
+
+# Logs
+logs/
+*.log
+
+# Static and media files
+staticfiles/
+media/
+
+# IDE and editor settings
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Django settings
+settings_local.py
