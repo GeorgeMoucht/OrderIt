@@ -1,57 +1,48 @@
 package com.example.orderitjava.data.repository;
 
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.example.orderitjava.data.api.ApiService;
 import com.example.orderitjava.data.api.RetrofitClient;
-import com.example.orderitjava.data.model.LoginRequest;
-import com.example.orderitjava.data.model.LoginResponse;
+import com.example.orderitjava.data.model.auth.LoginRequest;
+import com.example.orderitjava.data.model.auth.LoginResponse;
+import com.example.orderitjava.utils.NetworkUtils;
+import com.example.orderitjava.utils.Resource;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
+/**
+ * Repository class that handles user authentication-related API calls.
+ */
 public class AuthRepository {
-    private static final String TAG = "AuthRepository";
+    private static final String TAG="AuthRepository";
     private final ApiService apiService;
 
+    /**
+     * Initializes the AuthRepository with a singleton ApiService
+     * instance.
+     */
     public AuthRepository() {
         apiService = RetrofitClient.getApiService();
     }
 
-    public LiveData<LoginResponse> loginUser(String username, String password) {
-        MutableLiveData<LoginResponse> loginResponseLiveData = new MutableLiveData<>();
-        LoginRequest loginRequest = new LoginRequest(username, password);
-
-        Log.d(TAG, "Sending login request: " + username + " | " + password); // Debug log
-
-        apiService.loginUser(loginRequest).enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                Log.d(TAG, "Response received, Code: " + response.code()); // Log response status code
-
-                if (response.isSuccessful() && response.body() != null) {
-                    Log.d(TAG, "Login successful!");
-                    // Store response in LiveData
-                    loginResponseLiveData.postValue(response.body());
-                } else {
-                    Log.d(TAG, "Login failed: " + response.message());
-                    // Notify UI that login failed
-                    loginResponseLiveData.postValue(null);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.e(TAG, "API request failed: " + t.getMessage());
-                // Network failure
-                loginResponseLiveData.postValue(null);
-            }
-        });
-
-        return loginResponseLiveData;
+    /**
+     * Sends login credentials to the API and returns the response
+     * as LiveData.
+     *
+     * <p>
+     * The result is wrapped in a {@link Resource} to allow UI layers
+     * to respond to loading, success, or error states.
+     * </p>
+     *
+     * @param username The user's username.
+     * @param password The user's password.
+     * @return LiveData containing a Resource with the login result.
+     */
+    public LiveData<Resource<LoginResponse>> loginUser(
+            String username,
+            String password
+    ) {
+        LoginRequest request = new LoginRequest(username, password);
+        return NetworkUtils.performRequest(apiService.loginUser(request));
     }
 }

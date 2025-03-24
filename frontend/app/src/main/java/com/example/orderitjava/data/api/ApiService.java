@@ -1,7 +1,7 @@
 package com.example.orderitjava.data.api;
 
-import com.example.orderitjava.data.model.LoginRequest;
-import com.example.orderitjava.data.model.LoginResponse;
+import com.example.orderitjava.data.model.auth.LoginRequest;
+import com.example.orderitjava.data.model.auth.LoginResponse;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;

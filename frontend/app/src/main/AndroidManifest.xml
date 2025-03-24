@@ -27,7 +27,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.login.LoginActivity" />
+        <activity android:name=".ui.auth.login.LoginActivity" />
+        <activity android:name=".ui.HomeActivity" />
     </application>
 
 </manifest>
