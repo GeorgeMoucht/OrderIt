@@ -3,6 +3,7 @@ package com.example.orderitjava.data.api;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import com.example.orderitjava.OrderItApplication;
+import com.example.orderitjava.data.api.auth.TokenAuthenticator;
 import com.example.orderitjava.utils.TokenProvider;
 
 import java.io.IOException;
@@ -89,6 +90,7 @@ public class RetrofitClient {
         OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(logging)
                 .addInterceptor(tokenInterceptor)
+                .authenticator(new TokenAuthenticator())
                 .build();
 
         retrofit = new Retrofit.Builder()
@@ -106,5 +108,17 @@ public class RetrofitClient {
      */
     public static ApiService getApiService() {
         return retrofit.create(ApiService.class);
+    }
+
+    public static ApiService getApiServiceWithoutAuth() {
+        OkHttpClient noAuthClient = new OkHttpClient.Builder().build();
+
+        Retrofit refreshRetrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(noAuthClient)
+                .build();
+
+        return refreshRetrofit.create(ApiService.class);
     }
 }

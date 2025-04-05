@@ -6,8 +6,6 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 
 class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
-
     def post(self, request):
         try:
             refresh_token = request.data["refresh"]
@@ -20,3 +18,12 @@ class LogoutView(APIView):
             return Response({
                 "error": "Invalid refresh token"
             }, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProtectedView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({
+            "message": "This is protected data from Django."
+        })
