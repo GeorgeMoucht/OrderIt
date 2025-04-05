@@ -41,4 +41,15 @@
         android:textColor="@android:color/white"
         android:layout_marginTop="10dp" />
 
+    <ImageView
+        android:id="@+id/ivSecret"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_settings"
+        android:contentDescription="Developer Settings"
+        android:alpha="0.3" /> <!-- Μικρή διαφάνεια ώστε να μην είναι τόσο εμφανές -->
+
 </LinearLayout>

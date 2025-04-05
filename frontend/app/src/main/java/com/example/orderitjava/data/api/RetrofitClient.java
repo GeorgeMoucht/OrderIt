@@ -4,6 +4,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import com.example.orderitjava.OrderItApplication;
 import com.example.orderitjava.utils.TokenProvider;
+import com.example.orderitjava.utils.UrlProvider;
 
 import java.io.IOException;
 import okhttp3.Interceptor;
@@ -51,7 +52,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
-    private static final String BASE_URL = "http://10.0.2.2:8000/api/";
     private static Retrofit retrofit = null;
 
     static {
@@ -92,7 +92,7 @@ public class RetrofitClient {
                 .build();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(UrlProvider.getBaseUrl(OrderItApplication.getAppContext()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
