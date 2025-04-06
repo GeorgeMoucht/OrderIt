@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -70,14 +70,14 @@ public class LoginActivity extends BaseAuthActivity {
             loginViewModel.login(username, password);
         });
 
-        ImageView ivSecret = findViewById(R.id.ivSecret);
-        ivSecret.setOnLongClickListener(view -> {
-            // Ξεκίνησε το ServerSettingsActivity
+        TextView tvLoginTitle = findViewById(R.id.tvLoginTitle);
+
+        tvLoginTitle.setOnLongClickListener(v -> {
             Intent intent = new Intent(LoginActivity.this, ServerSettingsActivity.class);
             startActivity(intent);
-            // Επιστρέφει true για να σηματοδοτήσει ότι το event έχει καταναλωθεί.
             return true;
         });
+
 
     }
 

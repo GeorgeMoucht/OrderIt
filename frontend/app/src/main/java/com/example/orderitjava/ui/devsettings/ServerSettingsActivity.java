@@ -1,23 +1,26 @@
 package com.example.orderitjava.ui.devsettings;
 
-import android.annotation.SuppressLint;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.orderitjava.R;
-public class ServerSettingsActivity extends AppCompatActivity{
+import com.example.orderitjava.data.api.RetrofitClient;
+import com.example.orderitjava.ui.auth.login.LoginActivity;
+
+
+
+public class ServerSettingsActivity extends AppCompatActivity {
     private EditText etBaseUrl;
     private Button btnSave;
 
-    private static final String PREFS_NAME = "AppSettings";
-    private static final String KEY_BASE_URL = "BASE_URL";
+    private ServerSettingsViewModel viewModel;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,13 +29,27 @@ public class ServerSettingsActivity extends AppCompatActivity{
         etBaseUrl = findViewById(R.id.etBaseUrl);
         btnSave = findViewById(R.id.btnSave);
 
-        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        etBaseUrl.setText(prefs.getString(KEY_BASE_URL, "http://192.168.0.107:8000/api/"));
+        viewModel = new ViewModelProvider(this).get(ServerSettingsViewModel.class);
+
+        viewModel.getUrl().observe(this, url -> etBaseUrl.setText(url));
+
+        viewModel.getSaveSuccess().observe(this, success -> {
+            if (success) {
+                RetrofitClient.initRetrofit();
+                Toast.makeText(this, "URL αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Μη έγκυρο URL!", Toast.LENGTH_LONG).show();
+            }
+        });
 
         btnSave.setOnClickListener(v -> {
             String newUrl = etBaseUrl.getText().toString().trim();
-            prefs.edit().putString(KEY_BASE_URL, newUrl).apply();
-            Toast.makeText(this, "URL αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
+            viewModel.updateUrl(newUrl);
         });
     }
 }
