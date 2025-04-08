@@ -1,14 +1,16 @@
 package com.example.orderitjava.data.api;
 
 import android.util.Log;
+import androidx.annotation.NonNull;
 import com.example.orderitjava.OrderItApplication;
 import com.example.orderitjava.data.api.auth.TokenAuthenticator;
 import com.example.orderitjava.utils.TokenProvider;
-import com.example.orderitjava.utils.UrlProvider;
 
+import java.io.IOException;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -50,28 +52,39 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 
 public class RetrofitClient {
+    private static final String BASE_URL = "http://10.0.2.2:8000/api/";
     private static Retrofit retrofit = null;
-    private static ApiService apiService = null;
 
-    public static void initRetrofit() {
+    static {
+        initRetrofit();
+    }
+
+    private static void initRetrofit() {
+
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(
                 message -> Log.d("Retrofit", message)
         );
         logging.setLevel(HttpLoggingInterceptor.Level.BODY);
 
-        Interceptor tokenInterceptor = chain -> {
-            String token = TokenProvider.getInstance(OrderItApplication.getAppContext())
-                    .getAccessToken();
+        Interceptor tokenInterceptor = new Interceptor() {
+            @NonNull
+            @Override
+            public Response intercept(@NonNull Chain chain) throws IOException {
+                String token = TokenProvider.getInstance(OrderItApplication
+                        .getAppContext())
+                        .getAccessToken();
 
-            Request original = chain.request();
-            Request.Builder requestBuilder = original.newBuilder()
-                    .header("Content-Type", "application/json");
+                Request original = chain.request();
+                Request.Builder requestBuilder = original.newBuilder()
+                        .header("Content-Type", "application/json");
 
-            if (token != null) {
-                requestBuilder.header("Authorization", "Bearer " + token);
+                // Attach JWT token only if it exists
+                if (token != null) {
+                    requestBuilder.header("Authorization", "Bearer " + token);
+                }
+
+                return chain.proceed(requestBuilder.build());
             }
-
-            return chain.proceed(requestBuilder.build());
         };
 
         OkHttpClient client = new OkHttpClient.Builder()
@@ -80,24 +93,21 @@ public class RetrofitClient {
                 .authenticator(new TokenAuthenticator())
                 .build();
 
-        String baseUrl = UrlProvider.getBaseUrl(OrderItApplication.getAppContext());
         retrofit = new Retrofit.Builder()
-                .baseUrl(baseUrl)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build();
-
-        // Refresh apiService
-        apiService = retrofit.create(ApiService.class);
-
-        Log.d("RetrofitClient", "Retrofit reinitialized with BASE_URL: " + baseUrl);
     }
 
+    /**
+     * Returns a singleton instance of the {@link ApiService} interface,
+     * which defines the API endpoint used in the app.
+     *
+     * @return ApiService instance
+     */
     public static ApiService getApiService() {
-        if (apiService == null) {
-            initRetrofit();
-        }
-        return apiService;
+        return retrofit.create(ApiService.class);
     }
 
     public static ApiService getApiServiceWithoutAuth() {
@@ -112,4 +122,3 @@ public class RetrofitClient {
         return refreshRetrofit.create(ApiService.class);
     }
 }
-

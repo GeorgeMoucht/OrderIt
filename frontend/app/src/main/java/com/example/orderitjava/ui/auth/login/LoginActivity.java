@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
@@ -13,7 +12,6 @@ import com.example.orderitjava.R;
 import com.example.orderitjava.data.model.auth.LoginResponse;
 import com.example.orderitjava.ui.HomeActivity;
 import com.example.orderitjava.ui.auth.BaseAuthActivity;
-import com.example.orderitjava.ui.devsettings.ServerSettingsActivity;
 
 /**
  * Activity responsible for handling user login.
@@ -69,16 +67,6 @@ public class LoginActivity extends BaseAuthActivity {
 
             loginViewModel.login(username, password);
         });
-
-        TextView tvLoginTitle = findViewById(R.id.tvLoginTitle);
-
-        tvLoginTitle.setOnLongClickListener(v -> {
-            Intent intent = new Intent(LoginActivity.this, ServerSettingsActivity.class);
-            startActivity(intent);
-            return true;
-        });
-
-
     }
 
     /**
