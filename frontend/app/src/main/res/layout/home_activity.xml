@@ -1,35 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layoutHome"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:padding="24dp"
     android:orientation="vertical">
 
-    <!-- Optional: Display the current access token for debugging -->
     <TextView
         android:id="@+id/tvToken"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Token will appear here"
         android:textSize="14sp"
-        android:padding="16dp"
-        android:layout_marginBottom="16dp" />
+        android:padding="16dp" />
 
-    <!-- Button to call a protected endpoint -->
-    <Button
-        android:id="@+id/btnProtected"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Get Protected Data"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Button to logout -->
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout" />
-
+        android:text="@string/logout"
+        android:layout_marginTop="24dp" />
 </LinearLayout>
