@@ -7,9 +7,10 @@
     android:padding="20dp">
 
     <TextView
+        android:id="@+id/tvLoginTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login"
         android:textSize="24sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -19,7 +20,7 @@
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="text"
         android:padding="10dp" />
 
@@ -27,7 +28,7 @@
         android:id="@+id/etPassword"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:padding="10dp"/>
 
@@ -35,7 +36,7 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="@string/login"
         android:padding="10dp"
         android:backgroundTint="@android:color/holo_blue_dark"
         android:textColor="@android:color/white"
