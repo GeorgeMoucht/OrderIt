@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-(-3sd6n709p3%71@hq(5y#t&3v#9^6*3*x8#4%ts*mx9p+coei
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['10.0.2.2', '127.0.0.1', 'localhost', '192.168.0.107','192.168.1.3']
 
 
 # Application definition
@@ -142,7 +142,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # JWT Configurations
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=10),  # Token expires in 10 minutes
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # Token expires in 30 minutes
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),     # Refresh token expires in 1 day
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
