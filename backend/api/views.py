@@ -1,9 +1,13 @@
 from rest_framework import generics
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
-from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework import viewsets
+from .models import Table
+from .serializers import TableSerializer
 
 class LogoutView(APIView):
     def post(self, request):
@@ -23,7 +27,13 @@ class LogoutView(APIView):
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
+    def get(self):
         return Response({
             "message": "This is protected data from Django."
         })
+    
+
+class TableViewSet(viewsets.ReadOnlyModelViewSet):  # Μόνο GET (list + retrieve)
+    queryset = Table.objects.all()
+    serializer_class = TableSerializer
+
