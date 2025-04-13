@@ -1,0 +1,28 @@
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block title %}Dashboard - OrderIt{% endblock %}
+
+{% block content %}
+<div class="dashboard-header">
+    <div class="user-info">
+        <div class="user-icon">
+            {% include "web/icons/user-icon-solid.html" %}
+        </div>
+        <div class="user-name">
+            <h2>{{ request.user.username }}</h2>
+            <p>Welcome back 👋</p>
+        </div>
+    </div>
+</div>
+
+<div class="dashboard-grid">
+    <a href="{% url 'users' %}" class="dashboard-box">
+        <div class="box-content">
+            <h3>Manage Users</h3>
+            <p>View and edit registered staff accounts</p>
+        </div>
+    </a>
+    <!-- You can add more boxes here -->
+</div>
+{% endblock %}
