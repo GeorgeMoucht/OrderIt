@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
+from django.contrib.auth import logout
 
 User = get_user_model()
 
@@ -37,3 +38,8 @@ def manage_users(request):
         "users": users,
         "active_page": "users"
     })
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return redirect('login')
