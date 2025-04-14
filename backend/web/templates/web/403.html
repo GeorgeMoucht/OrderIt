@@ -1,0 +1,12 @@
+{% extends "web/base_auth.html" %}
+
+{% block title %}Access Denied{% endblock %}
+<div class="login-container">
+    <div class="login-box">
+        <h1>403 - <span class=""accent>Forbidden</span></h1>
+        <p class="subtitle">You do not have permission to access this page.</p>
+        <a href="{% url 'login' %}">
+            <button>Back to Login</button>
+        </a>
+    </div>
+</div>

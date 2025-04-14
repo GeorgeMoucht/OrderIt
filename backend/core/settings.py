@@ -120,6 +120,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'accounts.User'
 
+LOGIN_URL = '/web/login'
+# LOGIN_REDIRECT_URL = '/web/dashboard'
+# LOGOUT_REDIRECT_URL = '/web/login'
+
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
