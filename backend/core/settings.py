@@ -46,7 +46,9 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Our apps
-    'api'
+    'api',
+    'web',
+    'accounts'
 ]
 
 REST_FRAMEWORK = {
@@ -116,6 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'accounts.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/

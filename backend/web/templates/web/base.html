@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}OrderIt{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Order<span class="accent">It</span></h2>
+            </div>
+            <nav class="nav-links">
+                <nav class="nav-links">
+                    <a href="{% url 'dashboard' %}" class="{% if active_page == 'dashboard' %}active{% endif %}">
+                        {% include "web/icons/info-icon-solid.html" %}
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="{% url 'users' %}" class="{% if active_page == 'users' %}active{% endif %}">
+                        {% include "web/icons/users-icon-solid.html" %}
+                        <span>Users</span>
+                    </a>
+                </nav>
+                
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            {% block content %}
+            {% endblock %}
+        </main>
+    </div>
+</body>
+</html>
