@@ -7,31 +7,26 @@
     card_view:cardCornerRadius="12dp"
     card_view:cardElevation="6dp">
 
+    <!-- table_item.xml -->
     <LinearLayout
+        android:id="@+id/tableItemLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="#FFFFFF">
+        android:padding="8dp"
+        android:gravity="center"
+        android:background="@drawable/table_background">
 
         <TextView
             android:id="@+id/tvTableName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Τραπέζι 1"
-            android:textSize="20sp"
+            android:text="T1"
+            android:textSize="18sp"
             android:textStyle="bold"
-            android:textColor="#333333" />
-
-        <TextView
-            android:id="@+id/tvTableStatus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Κατάσταση: Ελεύθερο"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp"
-            android:textColor="#666666" />
+            android:textColor="@android:color/black"/>
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>
 
