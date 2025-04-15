@@ -29,7 +29,9 @@
 
         <activity android:name=".ui.auth.login.LoginActivity" />
         <activity android:name=".ui.HomeActivity" />
+        <activity android:name=".ui.tables.TableListActivity" />
         <activity android:name=".ui.devsettings.ServerSettingsActivity"/>
+
 
     </application>
 

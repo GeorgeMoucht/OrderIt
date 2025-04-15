@@ -14,6 +14,7 @@ import com.example.orderitjava.data.model.auth.LoginResponse;
 import com.example.orderitjava.ui.HomeActivity;
 import com.example.orderitjava.ui.auth.BaseAuthActivity;
 import com.example.orderitjava.ui.devsettings.ServerSettingsActivity;
+import com.example.orderitjava.ui.tables.TableListActivity;
 
 /**
  * Activity responsible for handling user login.
@@ -88,7 +89,7 @@ public class LoginActivity extends BaseAuthActivity {
      */
     @Override
     protected void onAuthSuccess(LoginResponse response) {
-        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+        Intent intent = new Intent(LoginActivity.this, TableListActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }
