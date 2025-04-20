@@ -1,0 +1,162 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.modal-content {
+    background-color: #fff;
+    padding: 2rem;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+    transform: translateY(-20px);
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(-20px);
+    }
+}
+
+.modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.4rem;
+    color: #2F4F4F;
+    font-weight: 600;
+    flex-grow: 1;
+    text-align: left;
+}
+
+.modal-header button:hover {
+    color: #a40000;
+}
+
+.close-btn {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 20px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #8B0000;
+    cursor: pointer;
+    padding: 0;
+    margin: 0;
+    margin-top: .5rem;
+    margin-right: .5rem;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: #a40000;
+    background: none;
+}
+
+.modal-body {
+    margin-top: 1rem;
+}
+
+.modal-body label { 
+    display: block;
+    margin-bottom: 0.25rem;
+    font-weight: 500;
+    color: #444;
+}
+
+.modal-body input,
+.modal-body button[type="submit"] {
+    box-sizing: border-box;
+}
+
+.modal-body input {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.modal-body button[type="submit"] {
+    background-color: #8B0000;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+.modal-body button[type="submit"]:hover {
+    background-color: #a40000;
+}
+
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.btn-cancel { 
+    background-color: #ccc;
+    color: #333;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-cancel:hover {
+    background-color: #bbb;
+}
+
+.btn-save {
+    background-color: #8B0000;
+    color: #fff;
+    padding: 0.8rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-save:hover {
+    background-color: #a40000;
+}
+
+.hidden {
+    display: none !important;
+}

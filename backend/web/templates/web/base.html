@@ -6,6 +6,7 @@
     <title>{% block title %}OrderIt{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
     <div class="dashboard-layout">
@@ -14,21 +15,18 @@
                 <h2>Order<span class="accent">It</span></h2>
             </div>
             <nav class="nav-links">
-                <nav class="nav-links">
-                    <a href="{% url 'dashboard' %}" class="{% if active_page == 'dashboard' %}active{% endif %}">
-                        {% include "web/icons/info-icon-solid.html" %}
-                        <span>Dashboard</span>
-                    </a>
-                    <a href="{% url 'users' %}" class="{% if active_page == 'users' %}active{% endif %}">
-                        {% include "web/icons/users-icon-solid.html" %}
-                        <span>Users</span>
-                    </a>
-                    <a href="{% url 'logout' %}" class="logout-link">
-                        {% include "web/icons/arrow-left-start-on-rectangle-solid.html" %}
-                        <span>Logout</span>
-                    </a>
-                </nav>
-                
+                <a href="{% url 'dashboard' %}" class="{% if active_page == 'dashboard' %}active{% endif %}">
+                    {% include "web/icons/info-icon-solid.html" %}
+                    <span>Dashboard</span>
+                </a>
+                <a href="{% url 'users' %}" class="{% if active_page == 'users' %}active{% endif %}">
+                    {% include "web/icons/users-icon-solid.html" %}
+                    <span>Users</span>
+                </a>
+                <a href="{% url 'logout' %}" class="logout-link">
+                    {% include "web/icons/arrow-left-start-on-rectangle-solid.html" %}
+                    <span>Logout</span>
+                </a>
             </nav>
         </aside>
 
@@ -36,6 +34,12 @@
             {% block content %}
             {% endblock %}
         </main>
+
+        <!-- <div id="toast" class="toast hidden">
+            <span id="toast-message"></span>
+        </div> -->
     </div>
+    <div id="toast-container"></div>
+    <script src="{% static 'js/base.js' %}"></script>
 </body>
 </html>
