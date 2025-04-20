@@ -1,5 +1,6 @@
 package com.example.orderitjava.ui.tables;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -8,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.orderitjava.R;
@@ -36,8 +39,11 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
      * Ενημερώνει τη λίστα των τραπεζιών με νέα δεδομένα και κάνει refresh το UI
      */
     public void setTableList(List<Table> newList) {
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new TableDiffCallback(this.tableList, newList));
         this.tableList = newList;
-        notifyDataSetChanged();
+        diffResult.dispatchUpdatesTo(this);
+//        this.tableList = newList;
+//        notifyDataSetChanged();
     }
 
     /**
@@ -59,20 +65,38 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
         Table table = tableList.get(position);
         holder.tvTableName.setText(table.getName());
+        Context context = holder.itemView.getContext();
 
         String status = table.getStatus();
         int color;
 
-        if (status.equalsIgnoreCase("Ελεύθερο")) {
-            color = Color.parseColor("#4CAF50"); // Πράσινο
-        } else if (status.equalsIgnoreCase("Κατειλημμένο") ||
-                status.equalsIgnoreCase("Κατειλημμένο (με κράτηση)")) {
-            color = Color.parseColor("#F44336"); // Κόκκινο
-        } else if (status.equalsIgnoreCase("Κρατημένο")) {
-            color = Color.parseColor("#FF9800"); // Πορτοκαλί
-        } else {
-            color = Color.LTGRAY; // Άγνωστο status
+        switch (table.getStatus()) {
+            case "Ελεύθερο":
+                color = ContextCompat.getColor(context, R.color.table_free);
+                break;
+            case "Κατειλημμένο":
+            case "Κατειλημμένο (με κράτηση)":
+                color = ContextCompat.getColor(context, R.color.table_busy);
+                break;
+            case "Κρατημένο":
+                color = ContextCompat.getColor(context, R.color.table_reserved);
+                break;
+            default:
+                color = ContextCompat.getColor(context, R.color.table_unkown);
+                break;
         }
+
+
+//        if (status.equalsIgnoreCase("Ελεύθερο")) {
+//            color = Color.parseColor("#4CAF50"); // Πράσινο
+//        } else if (status.equalsIgnoreCase("Κατειλημμένο") ||
+//                status.equalsIgnoreCase("Κατειλημμένο (με κράτηση)")) {
+//            color = Color.parseColor("#F44336"); // Κόκκινο
+//        } else if (status.equalsIgnoreCase("Κρατημένο")) {
+//            color = Color.parseColor("#FF9800"); // Πορτοκαλί
+//        } else {
+//            color = Color.LTGRAY; // Άγνωστο status
+//        }
 
         GradientDrawable background = (GradientDrawable) holder.layout.getBackground();
         background.setColor(color);

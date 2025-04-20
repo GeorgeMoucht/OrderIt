@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.orderitjava.R;
 import com.example.orderitjava.utils.Resource;
 
+import java.util.ArrayList;
+
 /**
  * Activity υπεύθυνη για την εμφάνιση της λίστας των τραπεζιών.
  * Χρησιμοποιεί RecyclerView σε μορφή πλέγματος (grid) με 2 στήλες,
@@ -33,7 +35,8 @@ public class TableListActivity extends AppCompatActivity {
         recyclerTables.setLayoutManager(new GridLayoutManager(this, 2)); // Grid με 2 στήλες
 
         // Δημιουργία adapter με αρχικά κενή λίστα
-        adapter = new TableAdapter(null);
+//        adapter = new TableAdapter(null);
+        adapter = new TableAdapter(new ArrayList<>());
         recyclerTables.setAdapter(adapter);
 
         // Δημιουργία του ViewModel (μέσω ViewModelProvider για lifecycle awareness)

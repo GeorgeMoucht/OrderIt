@@ -6,10 +6,10 @@
     <solid android:color="@android:color/white" />
 
     <!-- Στρογγυλεμένες γωνίες -->
-    <corners android:radius="16dp" />
+    <corners android:radius="12dp" />
 
     <!-- Ελαφρύ περίγραμμα σαν σκιά -->
-    <stroke
-        android:width="1dp"
-        android:color="#33000000" /> <!-- μαύρο με διαφάνεια -->
+<!--    <stroke-->
+<!--        android:width="1dp"-->
+<!--        android:color="#33000000" /> &lt;!&ndash; μαύρο με διαφάνεια &ndash;&gt;-->
 </shape>

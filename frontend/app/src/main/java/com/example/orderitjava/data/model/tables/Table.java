@@ -33,4 +33,13 @@ public class Table {
     public String getStatus() {
         return status;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if(!(o instanceof Table)) return false;
+        Table that = (Table) o;
+        return id == that.id &&
+                status.equals(that.status);
+    }
 }
