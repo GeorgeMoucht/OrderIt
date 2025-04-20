@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Default background color (θα αλλάξει από Java) -->
+    <solid android:color="@android:color/white" />
+
+    <!-- Στρογγυλεμένες γωνίες -->
+    <corners android:radius="12dp" />
+
+    <!-- Ελαφρύ περίγραμμα σαν σκιά -->
+<!--    <stroke-->
+<!--        android:width="1dp"-->
+<!--        android:color="#33000000" /> &lt;!&ndash; μαύρο με διαφάνεια &ndash;&gt;-->
+</shape>
