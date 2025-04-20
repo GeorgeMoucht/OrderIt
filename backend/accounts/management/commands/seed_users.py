@@ -1,7 +1,9 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
+from faker import Faker
 
 User = get_user_model()
+fake = Faker()
 
 class Command(BaseCommand):
     help = 'Seed the database with initial user data'
@@ -17,7 +19,7 @@ class Command(BaseCommand):
             )
             self.stdout.write(self.style.SUCCESS("Superuser 'admin' created"))
 
-            users = [
+        users = [
                 {
                     'username': 'john',
                     'email': 'john@example.com',
@@ -60,5 +62,14 @@ class Command(BaseCommand):
                 )
 
                 self.stdout.write(self.style.SUCCESS(f"User '{user['username']}' created"))
+
+        for i in range(25):
+            User.objects.create_user(
+                username=f"user{i+1}",
+                email=f"user{i+1}@example.com",
+                password="demo",
+                first_name=fake.first_name(),
+                last_name=fake.last_name()
+            )
 
         self.stdout.write(self.style.SUCCESS("User seeding complete!"))
