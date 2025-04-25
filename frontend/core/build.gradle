@@ -26,10 +26,12 @@ android {
 }
 
 dependencies {
-
     implementation libs.appcompat
     implementation libs.material
+    implementation libs.retrofit.v2110
+    implementation libs.converter.gson
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+    implementation libs.logging.interceptor.v493
 }

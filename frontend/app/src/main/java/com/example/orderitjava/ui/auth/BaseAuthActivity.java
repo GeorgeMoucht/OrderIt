@@ -5,8 +5,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 
-import com.example.orderitjava.data.model.auth.LoginResponse;
-import com.example.orderitjava.utils.Resource;
+import com.example.core.model.auth.LoginResponse;
+import com.example.core.utils.Resource;
 
 /**
  * Abstract base activity for authentication-related screens.

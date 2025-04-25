@@ -6,8 +6,10 @@ import android.os.Handler;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.core.utils.Resource;
 import com.example.orderitjava.ui.HomeActivity;
 import com.example.orderitjava.ui.auth.login.LoginActivity;
+import com.example.orderitjava.utils.SessionManager;
 import com.example.orderitjava.utils.TokenProvider;
 
 /**
@@ -21,7 +23,7 @@ import com.example.orderitjava.utils.TokenProvider;
  * <h3>Responsibilities:</h3>
  * <ul>
  *     <li>Initiates login requests via {@link com.example.orderitjava.data.repository.AuthRepository}</li>
- *     <li>Updates UI with {@link com.example.orderitjava.utils.Resource} status (loading, success, error)</li>
+ *     <li>Updates UI with {@link Resource} status (loading, success, error)</li>
  *     <li>Saves tokens securely using {@link com.example.orderitjava.utils.SessionManager}</li>
  *     <li>Caches tokens in memory using {@link TokenProvider} for faster access</li>
  * </ul>
@@ -44,7 +46,8 @@ public class SplashActivity extends AppCompatActivity {
 
         // Delay for 2 seconds before moving to LoginActivity
         new Handler().postDelayed(() -> {
-            TokenProvider tokenProvider = TokenProvider.getInstance(OrderItApplication.getAppContext());
+            SessionManager sessionManager = new SessionManager(OrderItApplication.getAppContext());
+            TokenProvider tokenProvider = TokenProvider.getInstance(sessionManager);
 
             Intent intent;
             if (tokenProvider.isLoggedIn()) {

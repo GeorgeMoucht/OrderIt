@@ -1,4 +1,4 @@
-package com.example.orderitjava.utils;
+package com.example.core.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;

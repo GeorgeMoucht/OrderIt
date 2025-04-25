@@ -1,9 +1,11 @@
-package com.example.orderitjava.data.api;
+package com.example.core.api;
 
-import com.example.orderitjava.data.model.auth.LoginRequest;
-import com.example.orderitjava.data.model.auth.LoginResponse;
-import com.example.orderitjava.data.model.tables.Table;
-import com.example.orderitjava.data.model.tables.TableResponse;
+import com.example.core.model.auth.LoginRequest;
+import com.example.core.model.auth.LoginResponse;
+import com.example.core.model.BaseResponse;
+import com.example.core.model.tables.Table;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,5 +17,5 @@ public interface ApiService {
     Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
 
     @GET("tables/")
-    Call<TableResponse> getTables();
+    Call<BaseResponse<List<Table>>> getTables();
 }

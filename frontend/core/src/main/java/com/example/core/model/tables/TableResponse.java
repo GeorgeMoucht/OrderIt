@@ -1,4 +1,4 @@
-package com.example.orderitjava.data.model.tables;
+package com.example.core.model.tables;
 
 import java.util.List;
 

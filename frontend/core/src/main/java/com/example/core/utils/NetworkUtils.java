@@ -1,10 +1,15 @@
-package com.example.orderitjava.utils;
+package com.example.core.utils;
+
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.orderitjava.data.model.BaseResponse;
+import com.example.core.model.BaseResponse;
+
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -63,8 +68,11 @@ public class NetworkUtils {
         call.enqueue(new Callback<BaseResponse<T>>() {
             @Override
             public void onResponse(@NonNull Call<BaseResponse<T>> call, @NonNull Response<BaseResponse<T>> response) {
+                Log.d("NetworkUtils", "onResponse: isSuccessful = " + response.isSuccessful());
+
                 if (response.isSuccessful() && response.body() != null) {
                     if (response.body().isSuccess()) {
+                        Log.d("NetworkUtils", "Data size = " + ((List<?>) response.body().getData()).size());
                         result.setValue(Resource.success(response.body().getData()));
                     } else {
                         result.setValue(Resource.error("Server returned success=false"));

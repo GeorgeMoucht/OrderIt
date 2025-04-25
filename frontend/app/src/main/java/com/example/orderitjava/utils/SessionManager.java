@@ -8,6 +8,8 @@ import java.security.GeneralSecurityException;
 import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKey;
 
+import com.example.core.auth.TokenStorage;
+
 
 /**
  * Secure SessionManager that uses
@@ -30,7 +32,7 @@ import androidx.security.crypto.MasterKey;
  *     <li>Dependency: androidx.security:security-crypto</li>
  * </ul>
  */
-public class SessionManager {
+public class SessionManager implements TokenStorage {
     private final SharedPreferences prefs;
     private final SharedPreferences.Editor editor;
 

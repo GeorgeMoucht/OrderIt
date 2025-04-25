@@ -1,8 +1,8 @@
 package com.example.orderitjava.ui.tables;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +13,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.core.model.tables.Table;
 import com.example.orderitjava.R;
-import com.example.orderitjava.data.model.tables.Table;
 
 import java.util.List;
 
@@ -39,11 +39,17 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
      * Ενημερώνει τη λίστα των τραπεζιών με νέα δεδομένα και κάνει refresh το UI
      */
     public void setTableList(List<Table> newList) {
-        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new TableDiffCallback(this.tableList, newList));
+        if (newList == null) {
+            Log.e("Adapter", "setTableList: Received NULL list");
+        } else {
+            Log.d("Adapter", "setTableList: Received list of size " + newList.size());
+        }
+//        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new TableDiffCallback(this.tableList, newList));
         this.tableList = newList;
-        diffResult.dispatchUpdatesTo(this);
+//        diffResult.dispatchUpdatesTo(this);
 //        this.tableList = newList;
-//        notifyDataSetChanged();
+        notifyDataSetChanged();
+        Log.d("Adapter", "Data set updated, total: " + getItemCount());
     }
 
     /**
@@ -64,6 +70,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
     @Override
     public void onBindViewHolder(@NonNull TableViewHolder holder, int position) {
         Table table = tableList.get(position);
+        Log.d("Adapter", "Binding table: " + table.getName());
         holder.tvTableName.setText(table.getName());
         Context context = holder.itemView.getContext();
 
@@ -108,7 +115,10 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.TableViewHol
      */
     @Override
     public int getItemCount() {
-        return tableList != null ? tableList.size() : 0;
+//        return tableList != null ? tableList.size() : 0;
+        int count = tableList != null ? tableList.size() : 0;
+        Log.d("Adapter", "getItemCount = " + count);
+        return count;
     }
 
     /**

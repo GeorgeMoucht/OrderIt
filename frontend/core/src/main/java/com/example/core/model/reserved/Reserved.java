@@ -1,4 +1,4 @@
-package com.example.orderitjava.data.model.reserved;
+package com.example.core.model.reserved;
 
 public class Reserved {
     private int id;

@@ -32,4 +32,8 @@ dependencies {
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+    implementation libs.retrofit.v2110
+    implementation libs.converter.gson
+    implementation libs.logging.interceptor.v493
+    implementation project(":core")
 }

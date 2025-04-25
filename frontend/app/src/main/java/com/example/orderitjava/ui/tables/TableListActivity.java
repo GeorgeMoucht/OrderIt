@@ -1,6 +1,7 @@
 package com.example.orderitjava.ui.tables;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,7 +10,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.orderitjava.R;
-import com.example.orderitjava.utils.Resource;
+import com.example.core.utils.Resource;
 
 import java.util.ArrayList;
 
@@ -56,8 +57,15 @@ public class TableListActivity extends AppCompatActivity {
             if (resource.status == Resource.Status.LOADING) {
                 // Optional: show loading spinner
             } else if (resource.status == Resource.Status.SUCCESS) {
-                adapter.setTableList(resource.data); // δίνουμε τα τραπέζια στον adapter
+                if (resource.data != null) {
+                    Log.d("Activity", "SUCCESS - Data size: " + resource.data.size());
+                    adapter.setTableList(resource.data); // pass to adapter
+                } else {
+                    Log.d("Activity", "SUCCESS but data is null");
+                }
+//                adapter.setTableList(resource.data); // δίνουμε τα τραπέζια στον adapter
             } else if (resource.status == Resource.Status.ERROR) {
+                Log.e("Activity", "ERROR: " + resource.message);
                 Toast.makeText(this, "Σφάλμα: " + resource.message, Toast.LENGTH_SHORT).show();
             }
         });

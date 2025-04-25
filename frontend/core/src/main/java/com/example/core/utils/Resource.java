@@ -1,4 +1,4 @@
-package com.example.orderitjava.utils;
+package com.example.core.utils;
 
 /**
  * Generic wrapper class that represents the state of a resource

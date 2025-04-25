@@ -1,7 +1,7 @@
-package com.example.orderitjava.data.model.tables;
+package com.example.core.model.tables;
 
+import com.example.core.model.reserved.Reserved;
 import com.google.gson.annotations.SerializedName;
-import com.example.orderitjava.data.model.reserved.Reserved;
 
 public class Table {
     private int id;

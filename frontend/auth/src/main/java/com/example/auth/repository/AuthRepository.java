@@ -1,12 +1,12 @@
-package com.example.orderitjava.data.repository;
+package com.example.auth.repository;
 
 
 import androidx.lifecycle.LiveData;
 
-import com.example.orderitjava.data.api.ApiService;
+import com.example.core.model.auth.LoginRequest;
+import com.example.core.model.auth.LoginResponse;
+import com.example.core.api.ApiService;
 import com.example.core.api.RetrofitClient;
-import com.example.orderitjava.data.model.auth.LoginRequest;
-import com.example.orderitjava.data.model.auth.LoginResponse;
 import com.example.core.utils.NetworkUtils;
 import com.example.core.utils.Resource;
 

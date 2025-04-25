@@ -1,4 +1,4 @@
-package com.example.auth.model;
+package com.example.core.model.auth;
 
 /**
  * Response model for a successful login API call.

@@ -1,4 +1,4 @@
-package com.example.orderitjava.data.api;
+package com.example.core.api;
 
 import android.util.Log;
 
@@ -56,6 +56,11 @@ public class RetrofitClient {
 
         apiService = retrofit.create(ApiService.class);
         Log.d("RetrofitClient", "Retrofit initialized with BASE_URL: " + baseUrl);
+    }
+
+    public static void reinitialize(String newUrl) {
+        baseUrl = newUrl;
+        initRetrofit();
     }
 
     public static ApiService getApiService() {
