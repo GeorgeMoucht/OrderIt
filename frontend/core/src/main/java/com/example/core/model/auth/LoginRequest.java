@@ -1,4 +1,4 @@
-package com.example.orderitjava.data.model.auth;
+package com.example.auth.model;
 
 
 /**
@@ -9,7 +9,7 @@ package com.example.orderitjava.data.model.auth;
  * request body to the login endpoint.
  * </p>
  *
- * Used by: {@link com.example.orderitjava.data.api.ApiService#loginUser(LoginRequest)}
+ * This class is typically used in API calls for user authentication.
  */
 public class LoginRequest {
     private final String username;

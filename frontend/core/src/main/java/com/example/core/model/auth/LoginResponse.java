@@ -1,4 +1,4 @@
-package com.example.orderitjava.data.model.auth;
+package com.example.auth.model;
 
 /**
  * Response model for a successful login API call.
@@ -14,7 +14,8 @@ package com.example.orderitjava.data.model.auth;
  *         "refresh": "eyJ0eXAiOiJKV1QiLCJhbGciOi.."
  *     }
  * </pre>
- * Used by: {@link com.example.orderitjava.data.api.ApiService}
+ *
+ * This class is typically used in API calls for user authentication.
  */
 public class LoginResponse {
     private String access;

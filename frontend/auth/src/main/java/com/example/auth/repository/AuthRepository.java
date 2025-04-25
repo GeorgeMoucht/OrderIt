@@ -4,11 +4,11 @@ package com.example.orderitjava.data.repository;
 import androidx.lifecycle.LiveData;
 
 import com.example.orderitjava.data.api.ApiService;
-import com.example.orderitjava.data.api.RetrofitClient;
+import com.example.core.api.RetrofitClient;
 import com.example.orderitjava.data.model.auth.LoginRequest;
 import com.example.orderitjava.data.model.auth.LoginResponse;
-import com.example.orderitjava.utils.NetworkUtils;
-import com.example.orderitjava.utils.Resource;
+import com.example.core.utils.NetworkUtils;
+import com.example.core.utils.Resource;
 
 /**
  * Repository class that handles user authentication-related API calls.

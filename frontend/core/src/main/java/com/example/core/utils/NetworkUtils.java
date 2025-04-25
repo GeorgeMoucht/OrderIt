@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.orderitjava.data.model.BaseResponse;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,4 +55,32 @@ public class NetworkUtils {
 
         return result;
     }
+
+    public static <T> LiveData<Resource<T>> performWrappedRequest(Call<BaseResponse<T>> call) {
+        MutableLiveData<Resource<T>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        call.enqueue(new Callback<BaseResponse<T>>() {
+            @Override
+            public void onResponse(@NonNull Call<BaseResponse<T>> call, @NonNull Response<BaseResponse<T>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().isSuccess()) {
+                        result.setValue(Resource.success(response.body().getData()));
+                    } else {
+                        result.setValue(Resource.error("Server returned success=false"));
+                    }
+                } else {
+                    result.setValue(Resource.error("HTTP " + response.code() + ": " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<BaseResponse<T>> call, @NonNull Throwable t) {
+                result.setValue(Resource.error("Network error: " + t.getMessage()));
+            }
+        });
+
+        return result;
+    }
+
 }
