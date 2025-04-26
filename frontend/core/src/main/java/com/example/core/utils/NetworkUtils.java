@@ -91,4 +91,32 @@ public class NetworkUtils {
         return result;
     }
 
+    public static <T> LiveData<Resource<List<T>>> performWrappedRequestList(Call<BaseResponse<List<T>>> call) {
+        MutableLiveData<Resource<List<T>>> result = new MutableLiveData<>();
+        result.setValue(Resource.loading());
+
+        call.enqueue(new Callback<BaseResponse<List<T>>>() {
+            @Override
+            public void onResponse(@NonNull Call<BaseResponse<List<T>>> call, @NonNull Response<BaseResponse<List<T>>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().isSuccess()) {
+                        List<T> list = response.body().getData();
+                        result.setValue(Resource.success(list));
+                    } else {
+                        result.setValue(Resource.error("Server returned success=false"));
+                    }
+                } else {
+                    result.setValue(Resource.error("HTTP " + response.code() + ": " + response.message()));
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<BaseResponse<List<T>>> call, @NonNull Throwable t) {
+                result.setValue(Resource.error("Network error: " + t.getMessage()));
+            }
+        });
+
+        return result;
+    }
+
 }

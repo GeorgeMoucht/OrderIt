@@ -33,12 +33,13 @@ public class TableViewModel extends AndroidViewModel {
 
         tables.addSource(source, result -> {
             Log.d("ViewModel", "Result received: " + result.status);
-            if (result.data != null) {
-                Log.d("ViewModel", "Number of tables: " + result.data.size());
-            }
 
             tables.setValue(result);
-            tables.removeSource(source);
+
+            if (result.status == Resource.Status.SUCCESS || result.status == Resource.Status.ERROR) {
+                tables.removeSource(source);
+            }
         });
     }
+
 }

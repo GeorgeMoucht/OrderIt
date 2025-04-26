@@ -1,6 +1,5 @@
 package com.example.core.repository;
 
-import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 
@@ -13,8 +12,7 @@ import java.util.List;
 
 public class TableRepository {
     public LiveData<Resource<List<Table>>> getTables() {
-        Log.d("Repository", "getTables() called");
-        return NetworkUtils.performWrappedRequest(
+        return NetworkUtils.performWrappedRequestList(
                 RetrofitClient.getApiService().getTables()
         );
     }
