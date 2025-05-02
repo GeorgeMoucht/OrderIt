@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.orderitjava.R;
-import com.example.orderitjava.data.api.RetrofitClient;
+import com.example.core.api.RetrofitClient;
 import com.example.orderitjava.ui.auth.login.LoginActivity;
 
 
@@ -35,7 +35,9 @@ public class ServerSettingsActivity extends AppCompatActivity {
 
         viewModel.getSaveSuccess().observe(this, success -> {
             if (success) {
-                RetrofitClient.initRetrofit();
+//                RetrofitClient.reinitialize();
+                String url = viewModel.getLastSavedUrl();
+                RetrofitClient.reinitialize(url);
                 Toast.makeText(this, "URL αποθηκεύτηκε!", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(this, LoginActivity.class);

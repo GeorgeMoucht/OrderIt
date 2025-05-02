@@ -9,9 +9,9 @@ import android.widget.Toast;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.core.model.auth.LoginResponse;
+import com.example.core.utils.Resource;
 import com.example.orderitjava.R;
-import com.example.orderitjava.data.model.auth.LoginResponse;
-import com.example.orderitjava.ui.HomeActivity;
 import com.example.orderitjava.ui.auth.BaseAuthActivity;
 import com.example.orderitjava.ui.devsettings.ServerSettingsActivity;
 import com.example.orderitjava.ui.tables.TableListActivity;
@@ -22,7 +22,7 @@ import com.example.orderitjava.ui.tables.TableListActivity;
  * This screen allows users to enter their credentials and initiates
  * the authentication process by delegating the logic to
  * {@link LoginViewModel}. It observes the login state using
- * {@link com.example.orderitjava.utils.Resource} and provides appropriate
+ * {@link Resource} and provides appropriate
  * UI feedback.
  * </p>
  *
