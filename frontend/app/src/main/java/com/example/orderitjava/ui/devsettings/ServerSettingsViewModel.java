@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.orderitjava.utils.AppSettingsManager;
+import com.example.core.utils.AppSettingsManager;
 
 /**
  * ViewModel for the Server Settings screen.
@@ -38,7 +38,7 @@ public class ServerSettingsViewModel extends AndroidViewModel {
 
     private final MutableLiveData<String> urlLiveData = new MutableLiveData<>();
     private final MutableLiveData<Boolean> saveSuccess = new MutableLiveData<>();
-
+    private String lastSavedUrl;
 
     /**
      * Constructs the ViewModel and initializes the AppSettingsManager.
@@ -81,10 +81,15 @@ public class ServerSettingsViewModel extends AndroidViewModel {
     public void updateUrl(String newUrl) {
         if (isValidUrl(newUrl)) {
             settingsManager.setBaseUrl(newUrl);
+            lastSavedUrl = newUrl; // store it
             saveSuccess.setValue(true);
         } else {
             saveSuccess.setValue(false);
         }
+    }
+
+    public String getLastSavedUrl() {
+        return lastSavedUrl;
     }
 
     /**

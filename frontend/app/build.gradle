@@ -41,6 +41,6 @@ dependencies {
     implementation libs.converter.gson
     implementation libs.logging.interceptor
     implementation libs.security.crypto.v110alpha06
-
-
+    implementation project(':core')
+    implementation project(':auth')
 }

@@ -15,7 +15,8 @@ class Command(BaseCommand):
                 email='admin@example.com',
                 password='admin',
                 first_name='Admin',
-                last_name='User'
+                last_name='User',
+                role='superadmin'
             )
             self.stdout.write(self.style.SUCCESS("Superuser 'admin' created"))
 
@@ -25,28 +26,32 @@ class Command(BaseCommand):
                     'email': 'john@example.com',
                     'password': 'password123',
                     'first_name': 'John',
-                    'last_name': 'Doe'
+                    'last_name': 'Doe',
+                    'role': 'waiter'
                 },
                 {
                     'username': 'sara',
                     'email': 'sara@example.com',
                     'password': 'password123',
                     'first_name': 'Sara',
-                    'last_name': 'Smith'
+                    'last_name': 'Smith',
+                    'role': 'bar'
                 },
                 {
                     'username': 'mike',
                     'email': 'mike@example.com',
                     'password': 'password123',
                     'first_name': 'Mike',
-                    'last_name': 'Brown'
+                    'last_name': 'Brown',
+                    'role': 'kitchen'
                 },
                 {
                     'username': 'anna',
                     'email': 'anna@example.com',
                     'password': 'password123',
                     'first_name': 'Anna',
-                    'last_name': 'Taylor'
+                    'last_name': 'Taylor',
+                    'role': 'waiter'
                 },
             ]
 
@@ -59,6 +64,7 @@ class Command(BaseCommand):
                     password=user['password'],
                     first_name=user['first_name'],
                     last_name=user['last_name'],
+                    role=user['role']
                 )
 
                 self.stdout.write(self.style.SUCCESS(f"User '{user['username']}' created"))
@@ -69,7 +75,8 @@ class Command(BaseCommand):
                 email=f"user{i+1}@example.com",
                 password="demo",
                 first_name=fake.first_name(),
-                last_name=fake.last_name()
+                last_name=fake.last_name(),
+                role='waiter'
             )
 
         self.stdout.write(self.style.SUCCESS("User seeding complete!"))

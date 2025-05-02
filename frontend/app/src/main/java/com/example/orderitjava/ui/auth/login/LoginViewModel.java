@@ -6,10 +6,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.orderitjava.utils.Resource;
+import com.example.core.model.auth.LoginResponse;
+import com.example.auth.repository.AuthRepository;
+import com.example.core.utils.Resource;
 
-import com.example.orderitjava.data.model.auth.LoginResponse;
-import com.example.orderitjava.data.repository.AuthRepository;
 import com.example.orderitjava.utils.SessionManager;
 import com.example.orderitjava.utils.TokenProvider;
 
@@ -33,6 +33,7 @@ import com.example.orderitjava.utils.TokenProvider;
 public class LoginViewModel extends AndroidViewModel {
     private final AuthRepository authRepository;
     private final SessionManager sessionManager;
+    private final TokenProvider tokenProvider;
 
     private final MutableLiveData<Resource<LoginResponse>> loginResponseLiveData = new MutableLiveData<>();
 
@@ -42,8 +43,9 @@ public class LoginViewModel extends AndroidViewModel {
      */
     public LoginViewModel(Application application) {
         super(application);
-        authRepository = new AuthRepository();
         sessionManager = new SessionManager(application);
+        tokenProvider = TokenProvider.getInstance(sessionManager);
+        authRepository = new AuthRepository();
     }
 
     /**
@@ -64,11 +66,15 @@ public class LoginViewModel extends AndroidViewModel {
                 );
 
                 // Store in TokenProvider
-                TokenProvider.getInstance(getApplication())
-                        .updateTokens(
-                                resource.data.getAccessToken(),
-                                resource.data.getRefreshToken()
-                        );
+                tokenProvider.updateTokens(
+                        resource.data.getAccessToken(),
+                        resource.data.getRefreshToken()
+                );
+//                TokenProvider.getInstance(getApplication())
+//                        .updateTokens(
+//                                resource.data.getAccessToken(),
+//                                resource.data.getRefreshToken()
+//                        );
             }
 
             loginResponseLiveData.setValue(resource);
