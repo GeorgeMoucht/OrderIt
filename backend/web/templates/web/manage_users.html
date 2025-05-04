@@ -8,9 +8,13 @@
 {% endblock %}
 
 {% block content %}
-<h2>Manage Users</h2>
 
-<form id="csrf-token-helper" style="display: none;">{% csrf_token %}</form>
+<div class="user-header">
+    <h2>Manage Users</h2>
+    <button id="add-user-btn" class="add-user-icon" title="Add User">
+        {% include "web/icons/plus-icon-solid.html" %}
+    </button>
+</div>
 
 <div class="table-container">
     <table class="user-table">
@@ -19,6 +23,7 @@
                 <th>Username</th>
                 <th>Email</th>
                 <th>Full Name</th>
+                <th>Role</th>
                 <th class="actions">Actions</th>
             </tr>
         </thead>
@@ -41,6 +46,7 @@
                       -
                     {% endif %}
                 </td>
+                <td>{{ user.role }}</td>
 
                 <td class="actions">
                     <div class="icon-actions">
@@ -130,7 +136,14 @@
         <input type="text" name="last_name" value="">
         <label>Email</label>
         <input type="email" name="email" value="">
-        
+        <label>Role</label>
+        <select name="role" id="edit-user-role">
+            <option value="superadmin">Super Admin</option>
+            <option value="waiter">Waiter</option>
+            <option value="bar">Bar</option>
+            <option value="kitchen">Kitchen</option>
+        </select>
+
         <div class="modal-footer">
             <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
             <button type="submit">Save</button>
@@ -148,5 +161,39 @@
         </div>
     </div>
 </template>
+
+<template id="add-user-template">
+    <form id="add-user-form">
+        {% csrf_token %}
+        <label>Username</label>
+        <input type="text" name="username" required>
+        
+        <label>First Name</label>
+        <input type="text" name="first_name">
+        
+        <label>Last Name</label>
+        <input type="text" name="last_name">
+        
+        <label>Email</label>
+        <input type="email" name="email">
+        
+        <label>Password</label>
+        <input type="password" name="password" required>
+        
+        <label>Role</label>
+        <select name="role">
+            <option value="superadmin">Super Admin</option>
+            <option value="waiter">Waiter</option>
+            <option value="bar">Bar</option>
+            <option value="kitchen">Kitchen</option>
+        </select>
+
+        <div class="modal-footer">
+            <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+            <button type="submit">Add</button>
+        </div>
+    </form>
+</template>
+
 
 {% endblock %}
