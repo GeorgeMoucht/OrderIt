@@ -160,3 +160,15 @@
 .hidden {
     display: none !important;
 }
+
+.modal-body select {
+    width: 100%;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    background-color: #fff;
+    color: #333;
+    appearance: none;
+}
