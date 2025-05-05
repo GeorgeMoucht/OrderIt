@@ -13,6 +13,7 @@ from rest_framework.parsers import JSONParser
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
 from django.utils.http import urlencode
+from api.models import Table
 
 
 User = get_user_model()
@@ -56,6 +57,15 @@ def manage_users(request):
         # "active_page": "users"
         "users": page_obj,
         "active_page": "users"
+    })
+
+@login_required
+@superuser_required
+def manage_tables(request):
+    tables = Table.objects.order_by("id")
+    return render(request, "web/manage_tables.html", {
+        "tables": tables,
+        "active_page": "tables"
     })
 
 @login_required
@@ -144,6 +154,64 @@ def delete_user_view(request):
             "success": False,
             "message": str(e)
         }, status=400)
+    
+@csrf_exempt
+@require_POST
+@login_required
+@superuser_required
+def delete_table_view(request):
+    try:
+        data = json.loads(request.body)
+        table_id = data.get("id")
+
+        if not table_id:
+            return JsonResponse({
+                "success": False,
+                "message": "Missing table ID."
+            }, status=400)
+        
+        from api.models import Table  # το σωστό import
+        table = get_object_or_404(Table, id=table_id)
+        table.delete()
+
+        return JsonResponse({
+            "success": True,
+            "message": "Table deleted successfully."
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "message": str(e)
+        }, status=400)
+
+@csrf_exempt
+@require_POST
+@login_required
+@superuser_required
+def create_table_view(request):
+    try:
+        data = json.loads(request.body)
+        name = data.get("name")
+
+        if not name:
+            return JsonResponse({
+                "success": False,
+                "message": "Name is required."
+            }, status=400)
+
+        Table.objects.create(name=name)
+
+        return JsonResponse({
+            "success": True,
+            "message": "Table created successfully."
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "message": str(e)
+        }, status=500)
 
 @login_required
 @superuser_required
