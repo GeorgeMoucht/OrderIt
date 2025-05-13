@@ -1,0 +1,71 @@
+{% extends "web/base.html" %}
+{% load static %}
+
+{% block title %}Manage Tables - OrderIt{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/manage_tables.css' %}">
+<script src="{% static 'js/tables.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="user-header">
+    <h2>Manage Users</h2>
+    <button id="add-table-btn" class="add-user-icon" title="Add Table">
+        {% include "web/icons/plus-icon-solid.html" %}
+    </button>
+</div>
+<div class="table-container">
+    <table class="user-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Table Name</th>
+                <th class="actions">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for table in tables %}
+            <tr class="table-row" data-tableid="{{ table.id }}" data-tablename="{{ table.name }}">
+                <td>{{ table.id }}</td>
+                <td>{{ table.name }}</td>
+                <td class="actions">
+                    <div class="icon-actions">    
+                        <button class="icon-btn delete-table-btn" title="Delete" data-tableid="{{ table.id }}" data-tablename="{{ table.name }}">
+                            {% include "web/icons/trash-icon-solid.html" %}
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="2">No tables found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <template id="delete-table-template">
+        <div>
+            <p>Are you sure you want to delete table <strong id="delete-table-name"></strong>?</p>
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button id="confirm-delete-table" class="btn btn-danger">Yes, delete</button>
+            </div>
+        </div>
+    </template>
+    <template id="add-table-template">
+        <form id="add-table-form">
+            {% csrf_token %}
+            <label>Table Name</label>
+            <input type="text" name="name" placeholder="e.g. Table 5">
+    
+            <div class="modal-footer">
+                <button type="button" class="btn-cancel" onclick="closeModal()">Cancel</button>
+                <button type="submit">Add</button>
+            </div>
+        </form>
+    </template>        
+</div>
+
+{% include "web/components/modal.html" %}
+{% endblock %}

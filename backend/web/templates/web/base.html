@@ -23,6 +23,10 @@
                     {% include "web/icons/users-icon-solid.html" %}
                     <span>Users</span>
                 </a>
+                <a href="{% url 'tables' %}" class="{% if active_page == 'tables' %}active{% endif %}">
+                    {% include "web/icons/table-icon-solid.html" %}
+                    <span>Tables</span>
+                </a>                
                 <a href="{% url 'logout' %}" class="logout-link">
                     {% include "web/icons/arrow-left-start-on-rectangle-solid.html" %}
                     <span>Logout</span>

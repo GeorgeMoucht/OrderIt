@@ -124,9 +124,6 @@
     {% endif %}
 </div> -->
 
-<!-- Reusable modal -->
-{% include "web/components/modal.html" %}
-
 <template id="edit-user-template">
     <form id="edit-user-form">
         {% csrf_token %}
@@ -196,4 +193,6 @@
 </template>
 
 
+
+{% include "web/components/modal.html" %}
 {% endblock %}
