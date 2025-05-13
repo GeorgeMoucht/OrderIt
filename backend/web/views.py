@@ -96,6 +96,7 @@ def update_user_view(request):
 
         if serializer.is_valid():
             serializer.save()
+            print("💾 Saved user with new role:", user.role)
             return JsonResponse({
                 'success': True,
                 'message': 'User updated successfully'
@@ -126,6 +127,8 @@ def update_user_view(request):
 def delete_user_view(request):
     try:
         data = json.loads(request.body)
+        print("Incoming data:", data)
+
         user_id = data.get("id")
 
         if not user_id:
@@ -212,6 +215,26 @@ def create_table_view(request):
             "success": False,
             "message": str(e)
         }, status=500)
+
+@csrf_exempt
+@require_POST
+@login_required
+@superuser_required
+def create_user_view(request):
+    try:
+        data = json.loads(request.body)
+        user = User.objects.create_user(
+            username=data["username"],
+            first_name=data.get("first_name", ""),
+            last_name=data.get("last_name", ""),
+            email=data.get("email", ""),
+            password=data["password"],
+            role=data.get("role", "waiter")
+        )
+        return JsonResponse({"success": True})
+    except Exception as e:
+        return JsonResponse({"success": False, "message": str(e)}, status=400)
+
 
 @login_required
 @superuser_required

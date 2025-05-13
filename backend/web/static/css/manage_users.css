@@ -1,6 +1,19 @@
 .table-container {
     overflow-x: auto;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
+}
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.user-header h2 {
+    margin: 0;
+    font-size: 1.6rem;
+    color: #2F4F4F;
 }
 
 .user-table {
@@ -72,6 +85,34 @@
 
 .delete-btn svg {
     color: #DC2626;
+}
+
+.add-user-icon {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+    padding: 0;
+}
+
+.add-user-icon .add-icon {
+    width: 34px;  /* μεγαλύτερο + */
+    height: 34px;
+    color: #222;
+}
+
+
+
+.add-user-icon svg {
+    width: 18px;
+    height: 18px;
+    color: #333;
 }
 
 .edit-btn:hover svg {

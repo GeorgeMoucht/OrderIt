@@ -6,7 +6,7 @@ User = get_user_model()
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email']
+        fields = ['first_name', 'last_name', 'email','role']
 
     def validate_email(self, value):
         if not value:
