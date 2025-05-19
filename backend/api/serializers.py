@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import Table, Reserved
+from .models import MenuItem, MenuCategory
 
 class ReservedSerializer(serializers.ModelSerializer):
     class Meta:
@@ -23,4 +24,27 @@ class TableSerializer(serializers.ModelSerializer):
         elif obj.state == 0 and obj.reserved:
             return "Κρατημένο"
         return "Ελεύθερο"
-        
+
+class RecursiveCategorySerializer(serializers.ModelSerializer):
+    subcategories = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MenuCategory
+        fields= ['id', 'name', 'subcategories']
+
+    def get_subcategories(self, obj):
+        return RecursiveCategorySerializer(obj.subcategories.all(), many=True).data
+
+class MenuItemSerializer(serializers.ModelSerializer):
+    category = RecursiveCategorySerializer(read_only=True)
+    image_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = MenuItem
+        fields = ['id', 'name', 'description', 'price', 'category', 'image_url']
+
+        def get_image_url(self, obj):
+            request = self.context.get('request')
+            if obj.image and request:
+                return request.build_absolute_uri(obj.image.url)
+            return None

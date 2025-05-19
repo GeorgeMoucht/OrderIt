@@ -42,3 +42,13 @@ function showToast(message, type = "success") {
         toast.remove();
     }, 3000);
 }
+
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll('.dropdown-toggle').forEach(toggle => {
+        toggle.addEventListener('click', () => {
+            toggle.closest('.nav-dropdown').classList.toggle('open');
+        });
+    });
+});

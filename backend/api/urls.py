@@ -6,10 +6,11 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView
 )
 from accounts.views import CustomTokenObtainPairView
-from .views import LogoutView, ProtectedView, TableViewSet
+from .views import LogoutView, ProtectedView, TableViewSet, MenuItemViewSet
 
 router = DefaultRouter()
 router.register(r'tables', TableViewSet, basename='table')
+router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
 
 urlpatterns = [
     # Authentication

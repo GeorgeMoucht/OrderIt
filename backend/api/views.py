@@ -6,8 +6,8 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
-from .models import Table
-from .serializers import TableSerializer
+from .models import Table, MenuItem
+from .serializers import TableSerializer, MenuItemSerializer
 
 class LogoutView(APIView):
     def post(self, request):
@@ -46,3 +46,7 @@ class TableViewSet(viewsets.ReadOnlyModelViewSet):  # Μόνο GET (list + retri
             "data": serializer.data
         })
 
+
+class MenuItemViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = MenuItem.objects.all()
+    serializer_class = MenuItemSerializer
