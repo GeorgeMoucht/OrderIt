@@ -33,7 +33,7 @@ class RecursiveCategorySerializer(serializers.ModelSerializer):
         fields= ['id', 'name', 'subcategories']
 
     def get_subcategories(self, obj):
-        return RecursiveCategorySerializer(obj.subcategories.all(), many=True).data
+        return RecursiveCategorySerializer(obj.subcategories.all(), many=True, context=self.context).data
 
 class MenuItemSerializer(serializers.ModelSerializer):
     category = RecursiveCategorySerializer(read_only=True)
@@ -43,8 +43,8 @@ class MenuItemSerializer(serializers.ModelSerializer):
         model = MenuItem
         fields = ['id', 'name', 'description', 'price', 'category', 'image_url']
 
-        def get_image_url(self, obj):
-            request = self.context.get('request')
-            if obj.image and request:
-                return request.build_absolute_uri(obj.image.url)
-            return None
+    def get_image_url(self, obj):
+        request = self.context.get('request')
+        if obj.image and request:
+            return request.build_absolute_uri(obj.image.url)
+        return None
