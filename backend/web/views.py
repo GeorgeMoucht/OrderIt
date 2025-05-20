@@ -347,3 +347,48 @@ def update_category(request):
             return JsonResponse({"success": False, "message": "Category not found"})
         except Exception as e:
             return JsonResponse({"success": False, "message": str(e)})
+
+
+@login_required
+@superuser_required
+def manage_menu_items(request):
+    query = request.GET.get("search", "").strip()
+
+    items = MenuItem.objects.select_related("category").order_by("id")
+
+    if query:
+        items = items.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(category__name__icontains=query)
+        )
+
+    paginator = Paginator(items, 12)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "web/manage_menu_items.html", {
+        "items": page_obj,
+        "search": query,
+        "active_page": "menu_items"
+    })
+
+@login_required
+@superuser_required
+def get_menu_item_json(request, item_id):
+    try:
+        item = MenuItem.objects.select_related("category").get(id=item_id)
+        return JsonResponse({
+            "id": item.id,
+            "name": item.name,
+            "description": item.description,
+            "price": str(item.price),
+            "category": {
+                "id": item.category.id,
+                "name": item.category.name
+            },
+        })
+    except MenuItem.DoesNotExist:
+        return JsonResponse({
+            "error": "Menu item not found.",
+        }, status=404)

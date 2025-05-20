@@ -37,7 +37,7 @@
                     </button>
                     <div class="dropdown-menu">
                         <a href="{% url 'menu_categories' %}" class="{% if active_page == 'menu_categories' %}active{% endif %}">Categories</a>
-                        <a href="#" class="">Items</a>
+                        <a href="{% url 'menu_items' %}" class="{% if active_page == 'menu_items' %}active{% endif %}">Items</a>
                     </div>
                 </div>
 
