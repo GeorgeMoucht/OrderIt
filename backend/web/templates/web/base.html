@@ -26,12 +26,27 @@
                 <a href="{% url 'tables' %}" class="{% if active_page == 'tables' %}active{% endif %}">
                     {% include "web/icons/table-icon-solid.html" %}
                     <span>Tables</span>
-                </a>                
+                </a>
+
+                <!-- Menu dropdown -->
+                <div class="nav-dropdown {% if active_page in 'menu_categories menu_items' %}open{% endif %}">
+                    <button class="dropdown-toggle">
+                        {% include "web/icons/info-icon-solid.html" %}
+                        <span>Menu</span>
+                        <span class="arrow">&#9662;</span>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a href="{% url 'menu_categories' %}" class="{% if active_page == 'menu_categories' %}active{% endif %}">Categories</a>
+                        <a href="{% url 'menu_items' %}" class="{% if active_page == 'menu_items' %}active{% endif %}">Items</a>
+                    </div>
+                </div>
+
                 <a href="{% url 'logout' %}" class="logout-link">
                     {% include "web/icons/arrow-left-start-on-rectangle-solid.html" %}
                     <span>Logout</span>
                 </a>
             </nav>
+
         </aside>
 
         <main class="main-content">

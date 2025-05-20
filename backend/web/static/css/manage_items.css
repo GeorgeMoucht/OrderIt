@@ -1,0 +1,120 @@
+.icon-btn {
+    border: none;
+    background-color: #f0f0f0;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 4px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.icon-btn:hover {
+    background-color: #e0e0e0;
+}
+
+.edit-btn svg, .delete-btn svg {
+    width: 20px;
+    height: 20px;
+}
+
+.edit-btn svg {
+    color: #2563EB;
+}
+
+.edit-btn:hover svg {
+    color: #1D4ED8;
+}
+
+.delete-btn svg {
+    color: #DC2626;
+}
+
+.delete-btn:hover svg {
+    color: #B91C1C;
+}
+
+
+
+/* .search-form {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 1.5rem 1rem;
+    gap: 0.5rem;
+}
+
+.search-form input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.95rem;
+}
+
+.search-form button {
+    padding: 0.5rem 0.75rem;
+    background-color: #8B0000;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.search-form button:hover {
+    background-color: #a70000;
+} */
+
+.user-header-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1.5rem;
+    margin-bottom: 1rem;
+    gap: 1rem;
+    flex-wrap: wrap; /* responsive fallback */
+}
+
+.user-header-row h2 {
+    font-size: 1.6rem;
+    margin: 0;
+    color: #2F4F4F;
+    flex-shrink: 0;
+}
+
+.actions-row {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+}
+
+.search-form {
+    max-width: 240px;
+    flex-shrink: 1;
+}
+
+.search-form input {
+    width: 100%;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.95rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+    margin-top: 1rem;
+}
+
+.add-user-icon {
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+}
+

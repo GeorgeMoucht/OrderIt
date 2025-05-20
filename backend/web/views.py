@@ -12,8 +12,9 @@ from .serializers import UserUpdateSerializer
 from rest_framework.parsers import JSONParser
 from django.views.decorators.http import require_POST
 from django.core.paginator import Paginator
+from django.db.models import Q
 from django.utils.http import urlencode
-from api.models import Table
+from api.models import Table, MenuItem, MenuCategory
 
 
 User = get_user_model()
@@ -241,3 +242,153 @@ def create_user_view(request):
 def logout_view(request):
     logout(request)
     return redirect('login')
+
+
+@login_required
+@superuser_required
+def manage_menu_categories(request):
+    search = request.GET.get("search", "").strip()
+
+    # Filter categories
+    category_list = MenuCategory.objects.select_related('parent').order_by("id")
+    if search:
+        category_list = category_list.filter(
+            Q(name__icontains=search) | Q(id__iexact=search)
+        )
+
+    paginator = Paginator(category_list, 15)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "web/manage_menu_categories.html", {
+        "categories": page_obj,
+        "active_page": "menu_categories",
+        "search": search
+    })
+
+@csrf_exempt
+@require_POST
+@login_required
+@superuser_required
+def create_category_view(request):
+    try:
+        data = json.loads(request.body)
+        name = data.get("name")
+        parent_id = data.get("parent")
+
+        if not name:
+            return JsonResponse({
+                "success": False,
+                "message": "Category name is required."
+            }, status=400)
+
+        parent = None
+        if parent_id:
+            parent = get_object_or_404(MenuCategory, id=parent_id)
+
+        MenuCategory.objects.create(name=name, parent=parent)
+
+        return JsonResponse({
+            "success": True,
+            "message": "Category created successfully."
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "message": str(e)
+        }, status=500)
+
+
+@csrf_exempt
+@require_POST
+@login_required
+@superuser_required
+def delete_category_view(request):
+    try:
+        data = json.loads(request.body)
+        category_id = data.get("id")
+
+        if not category_id:
+            return JsonResponse({
+                "success": False,
+                "message": "Missing category ID."
+            }, status=400)
+
+        category = get_object_or_404(MenuCategory, id=category_id)
+        category.delete()
+
+        return JsonResponse({
+            "success": True,
+            "message": "Category deleted successfully."
+        })
+
+    except Exception as e:
+        return JsonResponse({
+            "success": False,
+            "message": str(e)
+        }, status=400)
+
+
+@csrf_exempt
+@require_POST
+@login_required
+@superuser_required
+def update_category(request):
+    if request.method == "POST":
+        try:
+            data = json.loads(request.body)
+            cat = MenuCategory.objects.get(id=data["id"])
+            cat.name = data["name"]
+            cat.parent_id = data["parent"] if data["parent"] else None
+            cat.save()
+            return JsonResponse({"success": True})
+        except MenuCategory.DoesNotExist:
+            return JsonResponse({"success": False, "message": "Category not found"})
+        except Exception as e:
+            return JsonResponse({"success": False, "message": str(e)})
+
+
+@login_required
+@superuser_required
+def manage_menu_items(request):
+    query = request.GET.get("search", "").strip()
+
+    items = MenuItem.objects.select_related("category").order_by("id")
+
+    if query:
+        items = items.filter(
+            Q(name__icontains=query) |
+            Q(description__icontains=query) |
+            Q(category__name__icontains=query)
+        )
+
+    paginator = Paginator(items, 12)
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, "web/manage_menu_items.html", {
+        "items": page_obj,
+        "search": query,
+        "active_page": "menu_items"
+    })
+
+@login_required
+@superuser_required
+def get_menu_item_json(request, item_id):
+    try:
+        item = MenuItem.objects.select_related("category").get(id=item_id)
+        return JsonResponse({
+            "id": item.id,
+            "name": item.name,
+            "description": item.description,
+            "price": str(item.price),
+            "category": {
+                "id": item.category.id,
+                "name": item.category.name
+            },
+        })
+    except MenuItem.DoesNotExist:
+        return JsonResponse({
+            "error": "Menu item not found.",
+        }, status=404)
