@@ -26,11 +26,11 @@ class Table(models.Model):
 
 
 class MenuCategory(models.Model):
-    name = models.CharField(max_length=50)
-    parent = models.ForeignKey('self', null=True, blank=True, related_name='subcategories', on_delete=models.CASCADE)
+    name = models.CharField(max_length=50, unique=True)
 
     def __str__(self):
-        return f"{self.parent.name + ' > ' if self.parent else ''}{self.name}"
+        return self.name
+
 
 class MenuItem(models.Model):
     name = models.CharField(max_length=100)
