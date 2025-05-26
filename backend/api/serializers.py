@@ -25,18 +25,13 @@ class TableSerializer(serializers.ModelSerializer):
             return "Κρατημένο"
         return "Ελεύθερο"
 
-class RecursiveCategorySerializer(serializers.ModelSerializer):
-    subcategories = serializers.SerializerMethodField()
-
+class MenuCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = MenuCategory
-        fields= ['id', 'name', 'subcategories']
-
-    def get_subcategories(self, obj):
-        return RecursiveCategorySerializer(obj.subcategories.all(), many=True, context=self.context).data
+        fields = ['id', 'name']
 
 class MenuItemSerializer(serializers.ModelSerializer):
-    category = RecursiveCategorySerializer(read_only=True)
+    category = MenuCategorySerializer(read_only=True)
     image_url = serializers.SerializerMethodField()
 
     class Meta:

@@ -7,6 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
             requestAnimationFrame(() => {
                 const form = document.getElementById("add-item-form");
+                const categorySelect = form.querySelector("select[name='category']");
+
+                // Clear & fetch categories
+                categorySelect.innerHTML = '<option value="">-- Select Category --</option>';
+                fetch("/web/menu-categories/json/")
+                    .then(res => res.json())
+                    .then(categories => {
+                        categories.forEach(cat => {
+                            const option = document.createElement("option");
+                            option.value = cat.id;
+                            option.textContent = cat.name;
+                            categorySelect.appendChild(option);
+                        });
+                    });
 
                 form.addEventListener("submit", function (e) {
                     e.preventDefault();
@@ -78,12 +92,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     requestAnimationFrame(() => {
                         const form = document.getElementById("edit-item-form");
+                        const categorySelect = form.querySelector("select[name='category']");
+
                         form.querySelector("input[name='item_id']").value = item.id;
                         form.querySelector("input[name='name']").value = item.name;
                         form.querySelector("textarea[name='description']").value = item.description || "";
                         form.querySelector("input[name='price']").value = item.price;
-                        form.querySelector("select[name='category']").value = item.category?.id || "";
 
+                        // Clear and repopulate categories
+                        categorySelect.innerHTML = '<option value="">-- Select Category --</option>';
+                        fetch("/web/menu-categories/json/")
+                            .then(res => res.json())
+                            .then(categories => {
+                                categories.forEach(cat => {
+                                    const option = document.createElement("option");
+                                    option.value = cat.id;
+                                    option.textContent = cat.name;
+                                    if (item.category?.id === cat.id) {
+                                        option.selected = true;
+                                    }
+                                    categorySelect.appendChild(option);
+                                });
+                            });
 
                         form.addEventListener("submit", function (e) {
                             e.preventDefault();

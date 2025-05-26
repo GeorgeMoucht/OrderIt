@@ -20,7 +20,11 @@ urlpatterns = [
     path("menu-categories/create/", views.create_category_view, name="create_menu_category"),
     path("menu-categories/delete/", views.delete_category_view, name="delete_menu_category"),
     path("menu-categories/update/", views.update_category, name="update_category"),
+    path("menu-categories/json/", views.get_categories_json, name="menu_categories_json"),
+
 
     path("menu-items/", views.manage_menu_items, name="menu_items"),
     path("menu-items/<int:item_id>/json/", views.get_menu_item_json, name="menu_item_json"),
+    path("menu-items/create/", views.create_menu_item_view, name="create_menu_item"),
+    path("menu-items/update/", views.update_menu_item_view, name="update_menu_item"),
 ]

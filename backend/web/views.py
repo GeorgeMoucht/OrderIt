@@ -15,6 +15,7 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from django.utils.http import urlencode
 from api.models import Table, MenuItem, MenuCategory
+from api.models import MenuCategory
 
 
 User = get_user_model()
@@ -42,6 +43,9 @@ def login_view(request):
             })
     return render(request, 'web/login.html')
 
+def get_categories_json(request):
+    categories = MenuCategory.objects.all().values("id", "name")
+    return JsonResponse(list(categories), safe=False)
 
 @login_required
 @superuser_required
@@ -250,7 +254,8 @@ def manage_menu_categories(request):
     search = request.GET.get("search", "").strip()
 
     # Filter categories
-    category_list = MenuCategory.objects.select_related('parent').order_by("id")
+    category_list = MenuCategory.objects.order_by("id")
+
     if search:
         category_list = category_list.filter(
             Q(name__icontains=search) | Q(id__iexact=search)
@@ -373,6 +378,8 @@ def manage_menu_items(request):
         "active_page": "menu_items"
     })
 
+
+
 @login_required
 @superuser_required
 def get_menu_item_json(request, item_id):
@@ -392,3 +399,69 @@ def get_menu_item_json(request, item_id):
         return JsonResponse({
             "error": "Menu item not found.",
         }, status=404)
+    
+@csrf_exempt
+@require_POST
+@login_required
+@superuser_required
+def create_menu_item_view(request):
+    try:
+        name = request.POST.get("name", "").strip()
+        description = request.POST.get("description", "")
+        price = request.POST.get("price", "0.00")
+        category_id = request.POST.get("category")
+
+        if not name or not category_id:
+            return JsonResponse({"success": False, "message": "Name and category are required."}, status=400)
+
+        category = get_object_or_404(MenuCategory, id=category_id)
+        item = MenuItem.objects.create(
+            name=name,
+            description=description,
+            price=price,
+            category=category,
+        )
+
+        # Optional image
+        if request.FILES.get("image"):
+            item.image = request.FILES["image"]
+            item.save()
+
+        return JsonResponse({"success": True})
+
+    except Exception as e:
+        return JsonResponse({"success": False, "message": str(e)}, status=500)
+
+
+@csrf_exempt
+@require_POST
+@login_required
+@superuser_required
+def update_menu_item_view(request):
+    try:
+        item_id = request.POST.get("id")
+        name = request.POST.get("name", "").strip()
+        description = request.POST.get("description", "")
+        price = request.POST.get("price", "0.00")
+        category_id = request.POST.get("category")
+
+        if not item_id:
+            return JsonResponse({"success": False, "message": "Missing item ID."}, status=400)
+
+        item = get_object_or_404(MenuItem, id=item_id)
+        category = get_object_or_404(MenuCategory, id=category_id)
+
+        item.name = name
+        item.description = description
+        item.price = price
+        item.category = category
+
+        if request.FILES.get("image"):
+            item.image = request.FILES["image"]
+
+        item.save()
+
+        return JsonResponse({"success": True})
+
+    except Exception as e:
+        return JsonResponse({"success": False, "message": str(e)}, status=500)
