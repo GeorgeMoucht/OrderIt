@@ -6,11 +6,16 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView
 )
 from accounts.views import CustomTokenObtainPairView
-from .views import LogoutView, ProtectedView, TableViewSet, MenuItemViewSet
+from .views import LogoutView, ProtectedView, TableViewSet, MenuItemViewSet, MenuCategoryViewSet
 
 router = DefaultRouter()
 router.register(r'tables', TableViewSet, basename='table')
 router.register(r'menu-items', MenuItemViewSet, basename='menuitem')
+
+# 'menu-categories' -> all categories
+# 'menu-categories/1' -> category details
+# 'menu-categories/1/products' -> items of the category 1.
+router.register(r'menu-categories', MenuCategoryViewSet, basename='menucategory')
 
 urlpatterns = [
     # Authentication
