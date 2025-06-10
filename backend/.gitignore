@@ -19,7 +19,7 @@ logs/
 
 # Static and media files
 staticfiles/
-media/
+
 
 # IDE and editor settings
 .vscode/
